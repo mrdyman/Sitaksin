@@ -8,6 +8,7 @@ class Taksin extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('M_penduduk');
+		$this->load->model('Tsp_Model');
 	}
 
 	public function index()
@@ -21,6 +22,10 @@ class Taksin extends CI_Controller
 		$this->load->view('layout/navbar', $data);
 		$this->load->view('content/admin/target/index');
 		$this->load->view('layout/footer');
+	}
+
+	public function getMarker(){
+		echo json_encode($this->M_penduduk->get()->result());
 	}
 
 	public function test()

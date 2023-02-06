@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="<?= base_url(); ?>/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/pages/datatables.css">
 
+  <script type="text/javascript" src="<?= base_url(); ?>assets/js/maps/init.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMiqfHPAc3Mn_JIjC5JOa0D85mGFpbUSs&callback=mycallback"></script>
   <!-- CDN Js -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
@@ -29,4 +31,4 @@
 
 </head>
 
-<body>
+<body onload="initMap()">
