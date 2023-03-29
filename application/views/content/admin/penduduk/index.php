@@ -32,39 +32,39 @@
                     ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><span nik="<?= $a->nik; ?>" nama="<?= $a->nama; ?>" ttl="<?= $a->ttl; ?>" jk="<?= $a->jk; ?>" alamat="<?= $a->alamat; ?>" agama="<?= $a->agama; ?>" sd1="<?= $a->sd1; ?>" sd2="<?= $a->sd2; ?>" sd3="<?= $a->sd3; ?>" latitude="<?= $a->latitude; ?>" longitude="<?= $a->longitude; ?>" class="badge bg-light-primary detailclick" data-bs-toggle="modal" data-bs-target="#detail"><?= $a->nik; ?></span></td>
-                            <td><?= $a->nama; ?></td>
+                            <td><span nik="<?= $a['nik']; ?>" nama="<?= $a['nama']; ?>" ttl="<?= $a['ttl']; ?>" jk="<?= $a['jk']; ?>" alamat="<?= $a['alamat']; ?>" agama="<?= $a['agama']; ?>" sd1="<?= $a['sd1']; ?>" sd2="<?= $a['sd2']; ?>" sd3="<?= $a['sd3']; ?>" latitude="<?= $a['latitude']; ?>" longitude="<?= $a['longitude']; ?>" class="badge bg-light-primary detailclick" data-bs-toggle="modal" data-bs-target="#detail"><?= $a['nik']; ?></span></td>
+                            <td><?= $a['nama']; ?></td>
                             <td>
-                                <?php if ($a->jk == 1) {
+                                <?php if ($a['jk'] == 1) {
                                     echo 'Laki - Laki';
                                 } else {
                                     echo 'Perempuan';
                                 } ?>
                             </td>
                             <td>
-                                <?php if ($a->sd1 == 1) { ?>
+                                <?php if ($a['sd1'] == 1) { ?>
                                     ✔️
-                                <?php } else if ($a->sd1 == 0) { ?>
+                                <?php } else if ($a['sd1'] == 0) { ?>
                                     ❌
                                 <?php } ?>
                             </td>
                             <td>
-                                <?php if ($a->sd2 == 1) { ?>
+                                <?php if ($a['sd2'] == 1) { ?>
                                     ✔️
-                                <?php } else if ($a->sd2 == 0) { ?>
+                                <?php } else if ($a['sd2'] == 0) { ?>
                                     ❌
                                 <?php } ?>
                             </td>
                             <td>
-                                <?php if ($a->sd3 == 1) { ?>
+                                <?php if ($a['sd3'] == 1) { ?>
                                     ✔️
-                                <?php } else if ($a->sd3 == 0) { ?>
+                                <?php } else if ($a['sd3'] == 0) { ?>
                                     ❌
                                 <?php } ?>
                             </td>
                             <td>
-                                <button id="<?= $a->id; ?>" nik="<?= $a->nik; ?>" nama="<?= $a->nama; ?>" ttl="<?= $a->ttl; ?>" jk="<?= $a->jk; ?>" alamat="<?= $a->alamat; ?>" agama="<?= $a->agama; ?>" sd1="<?= $a->sd1; ?>" sd2="<?= $a->sd2; ?>" sd3="<?= $a->sd3; ?>" class="btn icon btn-primary editdatapend" type="button" data-bs-toggle="modal" data-bs-target="#editdata"><i class="bi bi-pencil-square"></i></button>
-                                <button id="<?= $a->id; ?>" nik="<?= $a->nik; ?>" nama="<?= $a->nama; ?>" class="btn icon btn-danger hapusdatapen" type="button" data-bs-toggle="modal" data-bs-target="#hapusdata"><i class="bi bi-trash3-fill"></i></button>
+                                <button id="<?= $a['id']; ?>" nik="<?= $a['nik']; ?>" nama="<?= $a['nama']; ?>" ttl="<?= $a['ttl']; ?>" jk="<?= $a['jk']; ?>" alamat="<?= $a['alamat']; ?>" agama="<?= $a['agama']; ?>" sd1="<?= $a['sd1']; ?>" sd2="<?= $a['sd2']; ?>" sd3="<?= $a['sd3']; ?>" class="btn icon btn-primary editdatapend" type="button" data-bs-toggle="modal" data-bs-target="#editdata"><i class="bi bi-pencil-square"></i></button>
+                                <button id="<?= $a['id']; ?>" nik="<?= $a['nik']; ?>" nama="<?= $a['nama']; ?>" class="btn icon btn-danger hapusdatapen" type="button" data-bs-toggle="modal" data-bs-target="#hapusdata"><i class="bi bi-trash3-fill"></i></button>
                             </td>
                         </tr>
                     <?php } ?>

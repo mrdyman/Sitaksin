@@ -9,7 +9,9 @@ class Tsp extends CI_Controller
     public function __construct()
 	{
 		parent::__construct();
+        $this->load->model('M_Polyline', 'result');
         $this->load->model('Tsp_Model', 'polyline');
+        $this->load->model('M_penduduk', 'penduduk');
 	}
 
     public function index()
@@ -54,7 +56,7 @@ class Tsp extends CI_Controller
 				// return to starting city
 				$min->path[] = array($i, 0);
 				// print list of cities visited;
-				$this->printPath($min->path);
+				$this->printPath($min->path, $min->cost);
 
 				// return optimal cost & etc.
                 echo "<br><br> Total Biaya : " . $min->cost;
@@ -156,11 +158,10 @@ class Tsp extends CI_Controller
 			return false;
 
 		$this->costMatrix = array();
-		$n_locations = 4;
-		// $n_locations = count($polyline);
+		$n_locations = 25;
 		for ($i = 0; $i < $n_locations; $i++)
 		{
-			echo $i+1 . ". " . $polyline[$i]['id'] . "\n" ."<br>";
+			// echo $i+1 . ". " . $polyline[$i]['id'] . "\n" ."<br>";
 			for ($j = 0; $j < $n_locations; $j++)
 			{
 				$distance = INF;
@@ -168,11 +169,34 @@ class Tsp extends CI_Controller
 				{
 					$loc1 = $i;
 					$loc2 = $j;
+					// $loc1 = $polyline[$j]['titik_awal'];
+					// $loc2 = $polyline[$j]['titik_tujuan'];
 					$distance = $this->getJarak($loc1, $loc2);
 				}
 				$this->costMatrix[$i][$j] = $distance;
 			}
 		}
+
+		// ?===========
+		// $n_locations = $this->getPenduduk();
+		
+		// $i=0;
+		// $j=0;
+		// foreach($n_locations as $locationX){
+		// 	foreach($n_locations as $locationY){
+		// 		$distance = INF;
+		// 		if($locationX['id'] != $locationY['id']){
+		// 			$loc1 = $locationX['id'];
+		// 			$loc2 = $locationY['id'];
+
+		// 			$distance = $this->getJarak($loc1, $loc2);
+		// 		}
+		// 		$this->costMatrix[$i][$j] = $distance;
+		// 		$j++;
+		// 	}
+		// 	$i++;
+		// }
+		// ?===========
 
 		$this->n = count($this->costMatrix);
 
@@ -187,15 +211,53 @@ class Tsp extends CI_Controller
         return $this->polyline->getPolyline();
     }
 
-    public function printPath($list)
+    public function getPenduduk(){
+        return $this->penduduk->get();
+    }
+
+    public function printPath($list, $TotalCost)
 	{
+		$tspResult = [];
+		$rute = [];
+		$step = [];
 		echo "<br> \nPath: \n";
 		for ($i = 0; $i < count($list); $i++) {
-			$start = $list[$i][0] + 1;
-			$end = $list[$i][1] + 1;
+			$start = $list[$i][0] + 0;
+			$end = $list[$i][1] + 0;
 			echo "<br>";
 			echo $start . " -> " . $end . "\n";
+			$path = $start . " -> " . $end . "\n";
+			$dataStep = $this->db->get_where('penduduk', ['code'=> $start])->row_array()['nama'] . ' -> ';
+			array_push($step, $dataStep);
+			array_push($rute, $path);
+			$data = $this->generateFinalPolyline($start, $end);
+			array_push($tspResult, $data);
 		}
+		echo json_encode($tspResult);
+		
+		$data = [
+			'titik_awal' => 0,
+			'titik_tujuan' => 0,
+			'rute' => implode($rute),
+			'jarak' => $TotalCost,
+			'koordinat' => implode($tspResult),
+			'step' => implode($step)
+		];
+
+		$this->db->insert('result', $data);
+	}
+	
+	private function generateFinalPolyline($start, $end){
+		return $this->db->get_where('polyline', ['titik_awal' => $start, 'titik_tujuan' => $end])->result_array()[0]['koordinat'];
+	}
+
+	public function getTspResult(){
+		echo json_encode($this->result->getPolyline(true));
+	}
+
+	public function getRute(){
+		$data = $this->db->select("*")->limit(1)->order_by('id',"DESC")->get("result")->row();
+		echo json_encode($data);
 	}
 }
 

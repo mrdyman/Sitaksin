@@ -5,6 +5,7 @@ class M_penduduk extends CI_Model
 {
 	public function get()
 	{
+		return $this->db->get('penduduk')->result_array();
 		$sql = "SELECT * FROM `penduduk`";
 		$data = $this->db->query($sql);
 		return $data;

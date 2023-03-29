@@ -1,8 +1,13 @@
-function initMap() {
-    var mapOptions = {
+var tempattitik = new Array();
 
-        center: { lat: -0.836261, lng: 119.893715 },
-        zoom: 17,
+var poly = []; //? => variabel untuk menampung titik koordinat polyline(jalan) untuk disimpan ke database
+var srcToDes = []; //? => variabel untuk menampung titik awal dan tujuan pada polyline
+var mkr = 0; //? jumlah marker yang di klik, (untuk mencegah user sambung > 2 titik)
+
+function initMap() {
+    var mapOptions = { 
+        center: { lat: 0.049676, lng: 119.880273 },
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
 
@@ -34,7 +39,6 @@ function initMap() {
         method: "post",
         dataType: "json",
         success: function (data) {
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 displayLocation(data[i]);
             }
@@ -43,16 +47,17 @@ function initMap() {
 }
 
 function displayLocation(location) {
+    var icon = "/assets/images/marker.png";
     var geocoder = new google.maps.Geocoder();
     var infowindow = new google.maps.InfoWindow();
-    var content = '<div class="infoWindow"><strong>' + location.nama_gedung + "</strong>" + "<br/>" + location.latitude + "<br/>" + location.longitude + "</div>";
+    var content = '<div class="infoWindow"><strong>' + location.nama + "</strong>" + "<br/>" + location.latitude + "<br/>" + location.longitude + "</div>";
 
     if (parseInt(location.lat) == 0) {
         geocoder.geocode({ address: location.address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
             var marker = new google.maps.Marker({
                 map: map,
-                // icon: icon,
+                icon: icon,
                 position: results[0].geometry.location,
                 title: location.name,
             });
@@ -67,7 +72,7 @@ function displayLocation(location) {
         var position = new google.maps.LatLng(parseFloat(location.latitude), parseFloat(location.longitude));
         var marker = new google.maps.Marker({
             map: map,
-            // icon: icon,
+            icon: icon,
             position: position,
             title: location.name,
         });

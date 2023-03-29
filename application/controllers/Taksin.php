@@ -15,7 +15,7 @@ class Taksin extends CI_Controller
 	{
 		$data = [
 			'title' => 'Target Vaksin',
-			'penduduk' => $this->M_penduduk->get()->result(),
+			'penduduk' => $this->M_penduduk->get(),
 		];
 		$this->load->view('layout/header', $data);
 		$this->load->view('layout/sidebar', $data);
@@ -25,7 +25,7 @@ class Taksin extends CI_Controller
 	}
 
 	public function getMarker(){
-		echo json_encode($this->M_penduduk->get()->result());
+		echo json_encode($this->M_penduduk->get());
 	}
 
 	public function test()

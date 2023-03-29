@@ -15,7 +15,7 @@ class Penduduk extends CI_Controller
 	{
 		$data = [
 			'title' => 'Data Penduduk',
-			'penduduk' => $this->M_penduduk->get()->result(),
+			'penduduk' => $this->M_penduduk->get(),
 		];
 
 		$this->load->view('layout/header', $data);

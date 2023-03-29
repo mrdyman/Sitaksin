@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller
 			'dosis1'	=>	$this->M_penduduk->dosis1()->num_rows(),
 			'dosis2'	=>	$this->M_penduduk->dosis2()->num_rows(),
 			'dosis3'	=>	$this->M_penduduk->dosis3()->num_rows(),
-			'pd'	=>	$this->M_penduduk->get()->num_rows(),
+			'pd'	=>	count($this->M_penduduk->get()),
 		];
 		
 		$this->load->view('layout/header', $data);
